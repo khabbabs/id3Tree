@@ -26,7 +26,7 @@
       <file leaf-file-name="findPromoter.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/findPromoter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="32" selection-start="2306" selection-end="2335" vertical-scroll-proportion="0.0" vertical-offset="1279" max-vertical-offset="2070">
+            <state line="92" column="32" selection-start="2306" selection-end="2335" vertical-scroll-proportion="0.0" vertical-offset="1380" max-vertical-offset="1725">
               <folding />
             </state>
           </provider>
@@ -35,7 +35,7 @@
       <file leaf-file-name="testPromoter.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/testPromoter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="6" selection-start="308" selection-end="308" vertical-scroll-proportion="0.45591938" vertical-offset="161" max-vertical-offset="2718">
+            <state line="119" column="0" selection-start="2720" selection-end="2720" vertical-scroll-proportion="0.4054054" vertical-offset="1515" max-vertical-offset="3330">
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -61,8 +61,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-1" />
     <option name="y" value="27" />
-    <option name="width" value="1602" />
-    <option name="height" value="874" />
+    <option name="width" value="1922" />
+    <option name="height" value="1054" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -98,16 +98,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hw1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hw1" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -117,6 +107,10 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="FullScreen" value="false" />
+    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -208,6 +202,9 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
+      <method />
+    </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -229,9 +226,6 @@
       <option name="PUREUNITTEST" value="true" />
       <option name="PARAMS" value="" />
       <option name="USE_PARAM" value="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -277,6 +271,23 @@
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="sslv3">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="4a777bd6-ed49-4853-83e8-74d9c51dac99" name="Default" comment="" />
@@ -286,15 +297,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="27" width="1602" height="874" extended-state="6" />
-    <editor active="false" />
+    <frame x="-1" y="27" width="1922" height="1054" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43048128" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2402529" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.108125" sideWeight="0.56951874" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.090625" sideWeight="0.56951874" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.111325614" sideWeight="0.47448274" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -309,6 +320,11 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -321,6 +337,54 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/findPromoter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="92" column="32" selection-start="2306" selection-end="2335" vertical-scroll-proportion="0.0" vertical-offset="1380" max-vertical-offset="1725">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testPromoter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="106" column="0" selection-start="2470" selection-end="2470" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="3330">
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/findPromoter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="92" column="32" selection-start="2306" selection-end="2335" vertical-scroll-proportion="0.0" vertical-offset="1380" max-vertical-offset="1725">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testPromoter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="21" selection-start="1306" selection-end="1306" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="2265">
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/findPromoter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="92" column="32" selection-start="2306" selection-end="2335" vertical-scroll-proportion="0.0" vertical-offset="1380" max-vertical-offset="1725">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testPromoter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="6" selection-start="308" selection-end="308" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="2265">
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/findPromoter.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="92" column="32" selection-start="2306" selection-end="2335" vertical-scroll-proportion="0.0" vertical-offset="1279" max-vertical-offset="2070">
@@ -388,7 +452,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testPromoter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="6" selection-start="308" selection-end="308" vertical-scroll-proportion="0.45591938" vertical-offset="161" max-vertical-offset="2718">
+        <state line="119" column="0" selection-start="2720" selection-end="2720" vertical-scroll-proportion="0.4054054" vertical-offset="1515" max-vertical-offset="3330">
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
