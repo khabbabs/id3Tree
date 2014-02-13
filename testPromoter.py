@@ -87,7 +87,7 @@ def fileInput():
         print maxGainIndex
 
 
-        testPromoter.root = grow_tree(col[maxGainIndex])
+        testPromoter.root = grow_tree(col[maxGainIndex], maxGainIndex)
         # print round(totalSystemEnt,2)
         # print totalVal
         # print pos
@@ -99,7 +99,7 @@ def fileInput():
 
 
 
-def grow_tree(listOfTuple):
+def grow_tree(listOfTuple, colIndex):
 
 
     listOfElems = [i[0] for i in listOfTuple]
@@ -108,23 +108,32 @@ def grow_tree(listOfTuple):
     print len(listOfElems)
 
 
-    if len(set([i[1] for i in listOfTuple])) == 1:
-        return leaf(listOfElems[0][1])
+    # if len(set([i[1] for i in listOfTuple])) == 1:
+    #     return leaf(listOfElems[0][1])
+    #
+    # else:
 
-    else:
+    setOfElems = set(listOfElems)
 
-        setOfElems = set(listOfElems)
-
-        countElements = [(float(listOfElems.count(i)),i) for i in setOfElems]
+    countElements = [(float(listOfElems.count(i)),i) for i in setOfElems]
 
 
-        print listOfElems
-        print setOfElems
-        print countElements
+    print listOfElems
+    print setOfElems
+    print countElements
 
-        for i in setOfElems:
-            print 'entropy for ' + i
-            print ent(listOfTuple, i)
+    for i in setOfElems:
+
+        # print 'entropy for ' + i
+        tempEnt =  ent(listOfTuple, i)
+        if tempEnt == 0.0:
+            #would return a leaf
+            print 'leafNode, at ' + i
+        else:
+            # would return node
+            print 'Node at '+ i
+            print 'ent: '+ str(tempEnt)
+
 
 
 
@@ -173,8 +182,11 @@ def ent(listTuple, targetAttr):
         temp = -((checkBool / total)*math.log(checkBool/total, 2) + ((otherBool) / total)*math.log(otherBool/total, 2))
         # print temp
         return temp
+
+        # if the entropy is going to be zero it should
+        # return the boolean value ['yes','no'] ['+','-']
     else:
-        return 0.0
+        return [i[1] for i in listTuple if i[0] == i]
 
 
 def getGain(manEnt, indList, targetAttrCol):
@@ -205,7 +217,12 @@ def getGain(manEnt, indList, targetAttrCol):
 
      subEnt = 0.0
      for i in countElements:
-         subEnt+=(i[0]/totalElems)*ent(indAttrCol,i[1])
+        entValue = ent(indAttrCol,i[1])
+
+        # fix this
+        if type(entValue) != 'str':
+            subEnt+=(i[0]/totalElems)*entValue
+
 
      # for i in difElements:
      print countElements
