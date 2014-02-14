@@ -11,9 +11,13 @@ class leaf:
         would hold either of the two boolean values
         in self.value.
     '''
-    def __init__(self,value):
-        self.value = value
+    def __init__(self,attribute, name):
+        self.attribute = attribute
+        self.name = name
 
+    def __repr__(self,level=0):
+        ret = "\t"*level+repr(self.name + '==>' +self.attribute)+"\n"
+        return ret
 class node:
 
     '''
@@ -22,6 +26,12 @@ class node:
     def __init__(self, attribute):
         self.attribute = attribute
         self.children = []
+
+    def __repr__(self, level=0):
+        ret = "\t"*level+repr(self.attribute)+"\n"
+        for child in self.children:
+            ret += child.__repr__(level+1)
+        return ret
 
 
 
@@ -38,6 +48,7 @@ boolCol = {}
 # the 2 different booleans.
 testPromoter.diffBool = []
 
+# testPromoter.root = None
 
 def fileInput():
 
@@ -49,9 +60,9 @@ def fileInput():
             # the split by comma is only for the
             # test case, in validation and training
             # there are no commas.
-            data = splitBySpace[0].split(',')
+            # data = splitBySpace[0].split(',')
 
-            # data = splitBySpace[0] # used for the actually example.
+            data = splitBySpace[0] # used for the actually example.
             for wordIndex ,atrribute in enumerate(data):
                 if col.get(wordIndex) == None:
                     col.setdefault(wordIndex, [atrribute])
@@ -61,7 +72,7 @@ def fileInput():
 
         boolValues = boolCol.values()
         for i, atrCol in enumerate(col.values()):
-            # print type(atrCol)
+
             col.__setitem__(i,zip(atrCol,boolValues))
 
         testPromoter.diffBool = list(set(boolCol.values()))
@@ -71,30 +82,74 @@ def fileInput():
 
         totalSystemEnt =  round(getEntropy(float(pos),float(totalVal - pos)),2)
 
-        tempRange = range(0, totalVal)
-        getMainGains = [getGain(totalSystemEnt,tempRange, col[i]) for i in col]
+        # tempRange = range(0, totalVal)
+        # getMainGains = [getGain(totalSystemEnt,tempRange, col[i]) for i in col]
 
 
-        maxGainIndex = getMainGains.index(max(getMainGains))
-
-
+        # maxGainIndex = getMainGains.index(max(getMainGains))
 
 
 
 
-        print totalSystemEnt
-        print getMainGains
-        print maxGainIndex
+        root = start_tree(range(0,totalVal), totalSystemEnt)
+
+        print root
 
 
-        testPromoter.root = grow_tree(col[maxGainIndex], maxGainIndex)
-        # print round(totalSystemEnt,2)
-        # print totalVal
-        # print pos
-        # print boolCol
-        # print col
-        # print "entropy (3,2): "+str(getEntropy(2.0,3.0))
 
+
+def start_tree(indRange,entropy):
+
+
+    gains = [getGain(entropy,indRange,col[i]) for i in col]
+
+    # print gains
+    # print '\n'
+    indexOfMaxGain = gains.index(max(gains))
+
+    listOfTuple = [col[indexOfMaxGain][i] for i in indRange ]
+
+    listOfElems = [i[0] for i in listOfTuple]
+
+    setOfElems = set(listOfElems)
+
+    countElements = [(float(listOfElems.count(i)),i) for i in setOfElems]
+
+    # listOfTuple = [col[indexOfMaxGain][i] for i in indRange ]
+
+    returnNode = node(indexOfMaxGain)
+
+    col[indexOfMaxGain] = []
+    # print returnNode
+    for attr in setOfElems:
+
+        tempEnt = ent(listOfTuple, attr)
+        if tempEnt == 0.0:
+            #would return a leaf
+
+
+            temp = [i[1] for i in listOfTuple if i[0] == attr]
+            if len(temp) != 0.0:
+                # print 'leafNode, at ' + attr + " ==> "+temp[0]
+            #returns a leaf node with one of the boolean values
+            #has the value
+
+                returnNode.children.append(leaf(temp[0], attr))
+            else:
+                print attr
+                print listOfTuple
+                returnNode.children.append(leaf('here', attr))
+        else:
+            # would return node
+            # print 'Node at '+ attr
+            # print 'ent: '+ str(tempEnt)
+            indtemp = [i for i,j in enumerate(listOfTuple) if j[0] == attr]
+            # print indtemp
+            returnNode.children.append(start_tree(indtemp,tempEnt))
+
+
+
+    return returnNode
 
 
 
@@ -105,7 +160,6 @@ def grow_tree(listOfTuple, colIndex):
     listOfElems = [i[0] for i in listOfTuple]
 
 
-    print len(listOfElems)
 
 
     # if len(set([i[1] for i in listOfTuple])) == 1:
@@ -117,15 +171,9 @@ def grow_tree(listOfTuple, colIndex):
 
     countElements = [(float(listOfElems.count(i)),i) for i in setOfElems]
 
-
-    print listOfElems
-    print setOfElems
-    print countElements
-
     for i in setOfElems:
-
         # print 'entropy for ' + i
-        tempEnt =  ent(listOfTuple, i)
+        tempEnt = ent(listOfTuple, i)
         if tempEnt == 0.0:
             #would return a leaf
             print 'leafNode, at ' + i
@@ -133,14 +181,6 @@ def grow_tree(listOfTuple, colIndex):
             # would return node
             print 'Node at '+ i
             print 'ent: '+ str(tempEnt)
-
-
-
-
-
-
-
-
 
 
 
@@ -186,7 +226,7 @@ def ent(listTuple, targetAttr):
         # if the entropy is going to be zero it should
         # return the boolean value ['yes','no'] ['+','-']
     else:
-        return [i[1] for i in listTuple if i[0] == i]
+        return 0.0
 
 
 def getGain(manEnt, indList, targetAttrCol):
@@ -204,29 +244,31 @@ def getGain(manEnt, indList, targetAttrCol):
      #would return ['High','Normal']
      # when attrCol contains all the
      #wind attributes
+     if len(targetAttrCol) == 0:
+         return 0.0
+     else:
+        listOfElems = [i[0] for i in targetAttrCol]
 
-     listOfElems = [i[0] for i in targetAttrCol]
+        setOfElems = set([i[0] for i in targetAttrCol])
 
-     setOfElems = set([i[0] for i in targetAttrCol])
+        countElements = [(float(listOfElems.count(i)),i) for i in setOfElems]
 
-     countElements = [(float(listOfElems.count(i)),i) for i in setOfElems]
+        indAttrCol = [targetAttrCol[j] for j in indList]
 
-     indAttrCol = [targetAttrCol[j] for j in indList]
+        totalElems = float(len(listOfElems))
 
-     totalElems = float(len(listOfElems))
-
-     subEnt = 0.0
-     for i in countElements:
-        entValue = ent(indAttrCol,i[1])
+        subEnt = 0.0
+        for i in countElements:
+            entValue = ent(indAttrCol,i[1])
 
         # fix this
-        if type(entValue) != 'str':
-            subEnt+=(i[0]/totalElems)*entValue
+            if type(entValue) != 'str':
+                subEnt+=(i[0]/totalElems)*entValue
 
 
      # for i in difElements:
-     print countElements
-     return manEnt - subEnt
+     # print countElements
+        return manEnt - subEnt
 
 
 
