@@ -21,13 +21,18 @@ class leaf:
 class node:
 
     '''
-     2
+     This is the node
+     contains children which is list
+     the children could either be other nodes
+     or leaf nodes
     '''
     def __init__(self, attribute):
         self.attribute = attribute
         self.name = ''
         self.children = []
 
+
+    # helps printing the trees in a nice format.
     def __repr__(self, level=0):
         ret = "\t"*level+repr(str(self.attribute)+'==>'+self.name)+"\n"
         for child in self.children:
@@ -49,9 +54,18 @@ boolCol = {}
 # the 2 different booleans.
 testPromoter.diffBool = []
 
-# testPromoter.root = None
+
 
 def fileInput():
+
+    '''
+        File input reads in the files loads the training set
+        using a dictionary with key being the column index
+
+        how to run:
+
+             python testPromoter.py training.txt validation.txt
+    '''
 
     with open(sys.argv[1]) as f:
         for index, line in enumerate(f):
@@ -69,7 +83,7 @@ def fileInput():
                     col.setdefault(wordIndex, [atrribute])
                 else:
                     col.get(wordIndex).append(atrribute)
-                # col.setdefault(index,[].append(data[index]))
+
 
         boolValues = boolCol.values()
         for i, atrCol in enumerate(col.values()):
@@ -78,23 +92,22 @@ def fileInput():
 
         testPromoter.diffBool = list(set(boolCol.values()))
 
+
+        # This section of code calculates
+        # total system entropy
         totalVal =  len(boolCol.values())
         pos = len([i for i in boolCol.values() if i == testPromoter.diffBool[0]])
-
         totalSystemEnt =  round(getEntropy(float(pos),float(totalVal - pos)),2)
 
-        # tempRange = range(0, totalVal)
-        # getMainGains = [getGain(totalSystemEnt,tempRange, col[i]) for i in col]
 
 
-        # maxGainIndex = getMainGains.index(max(getMainGains))
-
-
-
-
-        root = start_tree(range(0,totalVal), totalSystemEnt)
+        # Starts building the tree
+        root = grow_tree(range(0,totalVal), totalSystemEnt)
 
         print root
+
+        # checks to see if there is a validation
+        # set. Runs validation on the set
 
         if len(sys.argv) == 3:
             runValidation(root,sys.argv[2])
@@ -105,26 +118,62 @@ def fileInput():
 
 def runValidation(root, file):
 
+    '''
 
+        runs validation on each line from the validation set
+        returns the statistics
+
+    '''
+
+    i = 0.0
+    j = 0.0
     with open(file) as f:
         for line in f:
-            print line
+            splited = line.split(' ')
+            j+=1
+            if validateLine(root,splited[0]) == splited[1].replace('\n',''):
+                i+=1
+                if splited[1].replace('\n','') == '+':
+                    print 'here'
+
+        print "correct: " + str(i) + " total :" + str(j) +" "+ str(float(i / j) * 100)+" accuracy"
 
 
 
+def validateLine(root, line):
 
-def validateLine():
-    pass
+    '''
+        given a validation line, runs the tree data structure
+        recursively, when it reaches a leaf node it returns
+        the associated boolean value
+    '''
+    if root.__class__ is leaf:
+        return root.attribute
+    else:
+         for child in root.children:
+            if line[root.attribute] == child.name:
+                return validateLine(child, line)
 
 
 
-def start_tree(indRange,entropy):
+def grow_tree(indRange,entropy):
 
+    '''
+    grows the tree given a list of indices and an entropy
+    this function grows the tree recursively.
+
+    In the tennis example it would look something like
+    grow_tree([0,1,7,9,10], 0.94)
+    for the sunny attribute
+
+    while the starting iteration for the
+    tree would be grow_tree(range(0,14), 0.97)
+
+    '''
 
     gains = [getGain(entropy,indRange,col[i]) for i in col]
 
-    # print gains
-    # print '\n'
+
     indexOfMaxGain = gains.index(max(gains))
 
     listOfTuple = [col[indexOfMaxGain][i] for i in indRange ]
@@ -136,88 +185,25 @@ def start_tree(indRange,entropy):
 
 
 
-    countElements = [(float(listOfElems.count(i)),i) for i in setOfElems]
-
-    # listOfTuple = [col[indexOfMaxGain][i] for i in indRange ]
-
     myNode = node(indexOfMaxGain)
 
 
 
-    col[indexOfMaxGain] = []
-    # print myNode
     for attr in setOfElems:
 
-        # if len(setOfElems) == 1:
-        #     myNode.name = attr
-
-        # print len(setOfElems)
         tempEnt = ent(listOfTuple, attr)
         if tempEnt == 0.0:
             #would return a leaf
-
-
             temp = [i[1] for i in listOfTuple if i[0] == attr]
-            if len(temp) != 0.0:
-                # print 'leafNode, at ' + attr + " ==> "+temp[0]
-            #returns a leaf node with one of the boolean values
-            #has the value
-
-                myNode.children.append(leaf(temp[0], attr))
-            else:
-                print attr
-                print listOfTuple
-                myNode.children.append(leaf('here', attr))
+            myNode.children.append(leaf(temp[0], attr))
         else:
             # would return node
-            # print 'Node at '+ attr
-            # print 'ent: '+ str(tempEnt)
             indtemp = [i for i,j in enumerate(listOfTuple) if j[0] == attr]
-            # print indtemp
-            # myNode.name = attr
-            tempNode = start_tree(indtemp,tempEnt)
+            tempNode = grow_tree(indtemp,tempEnt)
             tempNode.name = attr
             myNode.children.append(tempNode)
 
-
-
     return myNode
-
-
-
-
-def grow_tree(listOfTuple, colIndex):
-
-
-    listOfElems = [i[0] for i in listOfTuple]
-
-
-
-
-    # if len(set([i[1] for i in listOfTuple])) == 1:
-    #     return leaf(listOfElems[0][1])
-    #
-    # else:
-
-    setOfElems = set(listOfElems)
-
-    countElements = [(float(listOfElems.count(i)),i) for i in setOfElems]
-
-    for i in setOfElems:
-        # print 'entropy for ' + i
-        tempEnt = ent(listOfTuple, i)
-        if tempEnt == 0.0:
-            #would return a leaf
-            print 'leafNode, at ' + i
-        else:
-            # would return node
-            print 'Node at '+ i
-            print 'ent: '+ str(tempEnt)
-
-
-
-
-
 
 
 
@@ -226,9 +212,12 @@ def getEntropy(pos, neg):
     takes two values positive and negative
     returns the entropy
     returns a float
+
+    This is only used to calculate the total
+    system entropy
+
     """
-    # countEach = dict(zip(attrList,map(attrList.count,attrList)))
-    # indexEach = countEach.iterkeys()
+
     total = neg + pos
     if neg != 0.0 and pos != 0.0:
         return -((pos / total)*math.log(pos/total, 2) + (neg / total)*math.log(neg/total, 2))
@@ -238,25 +227,24 @@ def getEntropy(pos, neg):
 
 def ent(listTuple, targetAttr):
 
+    '''
+        This calculates an entropy given a list, along with the
+        the target attribute.
+
+    '''
+
+
     total = float(len(filter(lambda x: x[0] == targetAttr,listTuple)))
 
-    # print [i[1] for i in listTuple if i[1] == testPromoter.diffBool[1]]
+
     # checks to see how many times a certain boolean appears.
     checkBool = float(len([i[1] for i in listTuple if i[1] == testPromoter.diffBool[0] and i[0] == targetAttr]))
 
-    # print 'in ent :' + targetAttr
-    # print total
-    # print checkBool
 
     if checkBool != 0.0 and checkBool != total:
         otherBool = total - checkBool
-
         temp = -((checkBool / total)*math.log(checkBool/total, 2) + ((otherBool) / total)*math.log(otherBool/total, 2))
-        # print temp
         return temp
-
-        # if the entropy is going to be zero it should
-        # return the boolean value ['yes','no'] ['+','-']
     else:
         return 0.0
 
@@ -272,10 +260,7 @@ def getGain(manEnt, indList, targetAttrCol):
         this calculates the Gain(Sunny,Wind) from our tennis example.
         getGrain(0.97, [1,2,8,9,11], ['Weak','Strong','Weak'...] )
      """
-     #list of different elements in attrCol
-     #would return ['High','Normal']
-     # when attrCol contains all the
-     #wind attributes
+
      if len(targetAttrCol) == 0:
          return 0.0
      else:
@@ -292,14 +277,8 @@ def getGain(manEnt, indList, targetAttrCol):
         subEnt = 0.0
         for i in countElements:
             entValue = ent(indAttrCol,i[1])
-
-        # fix this
-        #     if type(entValue) != 'str':
             subEnt+=(i[0]/totalElems)*entValue
 
-
-     # for i in difElements:
-     # print countElements
         return manEnt - subEnt
 
 
