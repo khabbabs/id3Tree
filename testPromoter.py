@@ -25,10 +25,11 @@ class node:
     '''
     def __init__(self, attribute):
         self.attribute = attribute
+        self.name = ''
         self.children = []
 
     def __repr__(self, level=0):
-        ret = "\t"*level+repr(self.attribute)+"\n"
+        ret = "\t"*level+repr(str(self.attribute)+'==>'+self.name)+"\n"
         for child in self.children:
             ret += child.__repr__(level+1)
         return ret
@@ -95,6 +96,25 @@ def fileInput():
 
         print root
 
+        if len(sys.argv) == 3:
+            runValidation(root,sys.argv[2])
+
+
+
+
+
+def runValidation(root, file):
+
+
+    with open(file) as f:
+        for line in f:
+            print line
+
+
+
+
+def validateLine():
+    pass
 
 
 
@@ -113,16 +133,25 @@ def start_tree(indRange,entropy):
 
     setOfElems = set(listOfElems)
 
+
+
+
     countElements = [(float(listOfElems.count(i)),i) for i in setOfElems]
 
     # listOfTuple = [col[indexOfMaxGain][i] for i in indRange ]
 
-    returnNode = node(indexOfMaxGain)
+    myNode = node(indexOfMaxGain)
+
+
 
     col[indexOfMaxGain] = []
-    # print returnNode
+    # print myNode
     for attr in setOfElems:
 
+        # if len(setOfElems) == 1:
+        #     myNode.name = attr
+
+        # print len(setOfElems)
         tempEnt = ent(listOfTuple, attr)
         if tempEnt == 0.0:
             #would return a leaf
@@ -134,22 +163,25 @@ def start_tree(indRange,entropy):
             #returns a leaf node with one of the boolean values
             #has the value
 
-                returnNode.children.append(leaf(temp[0], attr))
+                myNode.children.append(leaf(temp[0], attr))
             else:
                 print attr
                 print listOfTuple
-                returnNode.children.append(leaf('here', attr))
+                myNode.children.append(leaf('here', attr))
         else:
             # would return node
             # print 'Node at '+ attr
             # print 'ent: '+ str(tempEnt)
             indtemp = [i for i,j in enumerate(listOfTuple) if j[0] == attr]
             # print indtemp
-            returnNode.children.append(start_tree(indtemp,tempEnt))
+            # myNode.name = attr
+            tempNode = start_tree(indtemp,tempEnt)
+            tempNode.name = attr
+            myNode.children.append(tempNode)
 
 
 
-    return returnNode
+    return myNode
 
 
 
@@ -262,8 +294,8 @@ def getGain(manEnt, indList, targetAttrCol):
             entValue = ent(indAttrCol,i[1])
 
         # fix this
-            if type(entValue) != 'str':
-                subEnt+=(i[0]/totalElems)*entValue
+        #     if type(entValue) != 'str':
+            subEnt+=(i[0]/totalElems)*entValue
 
 
      # for i in difElements:
